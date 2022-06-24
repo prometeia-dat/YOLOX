@@ -3,6 +3,7 @@
 # Copyright (c) Megvii, Inc. and its affiliates.
 
 import os
+from pathlib import Path
 from loguru import logger
 
 import cv2
@@ -57,10 +58,10 @@ class COCODataset(Dataset):
         """
         super().__init__(img_size)
         if data_dir is None:
-            data_dir = os.path.join(get_yolox_datadir(), "COCO")
+            data_dir = get_yolox_datadir()
+
         self.data_dir = data_dir
         self.json_file = json_file
-
         self.coco = COCO(os.path.join(self.data_dir, "annotations", self.json_file))
         remove_useless_info(self.coco)
         self.ids = self.coco.getImgIds()
